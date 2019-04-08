@@ -27,9 +27,11 @@ class InputsViewModel {
 
     let tryOutTrigger: PublishSubject<Void> = .init()
 
-    private let dispobseBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private let navigator: AppNavigator
 
-    init() {
+    init(navigator: AppNavigator) {
+        self.navigator = navigator
         let allInputs = Observable
             .combineLatest(baseURLInput.unwrap(),
                            pathInput.unwrap(),
@@ -41,11 +43,8 @@ class InputsViewModel {
             .asObserver()
             .observeOn(MainScheduler.instance)
             .withLatestFrom(allInputs)
-            .subscribe(onNext: perform(target:))
-            .disposed(by: dispobseBag)
-    }
-
-    private func perform(target: AnyTarget) {
-
+            .map(AppNavigator.Destination.outputs(target:))
+            .subscribe(onNext: navigator.navigate(to:))
+            .disposed(by: disposeBag)
     }
 }

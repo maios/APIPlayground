@@ -8,10 +8,13 @@
 
 import Foundation
 import Moya
+import RxCocoa
 import RxMoya
 import RxSwift
 
 class OutputsViewModel {
+
+    let result: BehaviorRelay<Data> = .init(value: Data())
 
     private let networkProvider: MoyaProvider<AnyTarget>
     private let target: AnyTarget
@@ -21,5 +24,18 @@ class OutputsViewModel {
     init(target: AnyTarget) {
         self.target = target
         self.networkProvider = MoyaProvider<AnyTarget>()
+    }
+
+    func sendAPIRequest() {
+        networkProvider
+            .rx
+            .request(target)
+            .mapJSON(failsOnEmptyData: false)
+            .map { json in
+                return try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            }
+            .asObservable()
+            .bind(to: result)
+            .disposed(by: disposeBag)
     }
 }

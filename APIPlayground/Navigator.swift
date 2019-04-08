@@ -48,7 +48,7 @@ class AppNavigator: Navigator {
 
         switch destination {
         case .inputs:
-            let viewModel = InputsViewModel()
+            let viewModel = InputsViewModel(navigator: self)
             let viewController: InputsViewController = make(viewModel: viewModel)
             return viewController
 
