@@ -12,6 +12,9 @@ import RxCocoa
 import RxSwift
 import UIKit
 
+typealias ParameterRow = SplitRow<TextRow, TextRow>
+typealias HeaderRow = SplitRow<TextRow, TextRow>
+
 class InputsViewController: FormViewController, Bindable {
 
     var viewModel: InputsViewModel!
@@ -39,11 +42,12 @@ class InputsViewController: FormViewController, Bindable {
         }
 
         let makeMultivaluedSection: (_ header: String) -> MultivaluedSection = { header in
-            let section = MultivaluedSection(multivaluedOptions: [.Insert, .Delete], header: header) { section in
+            let section = MultivaluedSection(header: header) { section in
                 section.multivaluedRowToInsertAt = { _ in
-                    return TextRow() { row in
-                        row.placeholder = "key=value"
-                        row.cell.textField.autocapitalizationType = .none
+                    return SplitRow<TextRow, TextRow>() {
+                        $0.rowLeftPercentage = 0.3
+                        $0.rowLeft = TextRow() { $0.placeholder = "key" }
+                        $0.rowRight = TextRow() { $0.placeholder = "value" }
                     }
                 }
             }
@@ -71,29 +75,36 @@ class InputsViewController: FormViewController, Bindable {
             self.viewModel.httpMethodInput.accept(pickerRow.value!)
         }
 
-        let toTextRows: ([String: Any]) -> [TextRow] = {
+        let toSplitRows: ([String: Any]) -> [SplitRow<TextRow, TextRow>] = {
             return $0.reduce(into: []) { (result, item) in
-                let row = TextRow() { $0.value = "\(item.key)=\(item.value)" }
+                let row = SplitRow<TextRow, TextRow>() {
+                    $0.rowLeft = TextRow() { $0.value = item.key }
+                    $0.rowRight = TextRow() { $0.value = "\(item.value)" }
+                }
                 result.append(row)
             }
         }
 
-        toTextRows(viewModel.parametersInput.value ?? [:]).forEach(parametersSection.append)
-        toTextRows(viewModel.headersInput.value ?? [:]).forEach(headersSection.append)
+        toSplitRows(viewModel.parametersInput.value ?? [:]).forEach { parametersSection.insert($0, at: 0) }
+        toSplitRows(viewModel.headersInput.value ?? [:]).forEach { headersSection.insert($0, at: 0) }
 
         tryOutButtonRow.onCellSelection { [unowned self] (_, _) in
-            let parameters: Parameters = self.parametersSection.allRows.reduce(into: [:]) { (result, row) in
-                let components = (row as? TextRow)?.value?.components(separatedBy: "=") ?? []
-                if components.count == 2 {
-                    result[components.first!] = components.last!
+            let parameters: Parameters = self.parametersSection.allRows
+                .compactMap { $0 as? ParameterRow }
+                .reduce(into: [:]) { (result, row) in
+                    guard let key = row.value?.left, let value = row.value?.right else {
+                        return
+                    }
+                    result[key] = value
                 }
-            }
-            let header: [String: String] = self.headersSection.allRows.reduce(into: [:]) { (result, row) in
-                let components = (row as? TextRow)?.value?.components(separatedBy: "=") ?? []
-                if components.count == 2 {
-                    result[components.first!] = components.last!
+            let header: [String: String] = self.headersSection.allRows
+                .compactMap { $0 as? HeaderRow }
+                .reduce(into: [:]) { (result, row) in
+                    guard let key = row.value?.left, let value = row.value?.right else {
+                        return
+                    }
+                    result[key] = value
                 }
-            }
             self.viewModel.parametersInput.accept(parameters)
             self.viewModel.headersInput.accept(header)
 

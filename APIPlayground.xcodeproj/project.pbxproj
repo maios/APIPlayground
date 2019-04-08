@@ -31,6 +31,10 @@
 		3A97E724225B4A6700EDAD6F /* OutputsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A97E723225B4A6700EDAD6F /* OutputsViewModel.swift */; };
 		3A97E726225B4CD000EDAD6F /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A97E725225B4CD000EDAD6F /* Navigator.swift */; };
 		3A97E729225B528500EDAD6F /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A97E728225B528500EDAD6F /* Bindable.swift */; };
+		3AC85E0E225BCB2E006E9561 /* SplitRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC85E0D225BCB2E006E9561 /* SplitRowCell.swift */; };
+		3AC85E10225BCB62006E9561 /* SplitRowCellTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC85E0F225BCB62006E9561 /* SplitRowCellTableView.swift */; };
+		3AC85E12225BCB7E006E9561 /* SplitRowValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC85E11225BCB7E006E9561 /* SplitRowValue.swift */; };
+		3AC85E14225BCB92006E9561 /* SplitRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC85E13225BCB92006E9561 /* SplitRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +76,10 @@
 		3A97E723225B4A6700EDAD6F /* OutputsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputsViewModel.swift; sourceTree = "<group>"; };
 		3A97E725225B4CD000EDAD6F /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		3A97E728225B528500EDAD6F /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
+		3AC85E0D225BCB2E006E9561 /* SplitRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitRowCell.swift; sourceTree = "<group>"; };
+		3AC85E0F225BCB62006E9561 /* SplitRowCellTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitRowCellTableView.swift; sourceTree = "<group>"; };
+		3AC85E11225BCB7E006E9561 /* SplitRowValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitRowValue.swift; sourceTree = "<group>"; };
+		3AC85E13225BCB92006E9561 /* SplitRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,10 +223,22 @@
 		3A97E727225B527300EDAD6F /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				3AC85E0C225BCB0F006E9561 /* SplitRow */,
 				3A97E725225B4CD000EDAD6F /* Navigator.swift */,
 				3A97E728225B528500EDAD6F /* Bindable.swift */,
 			);
 			name = Misc;
+			sourceTree = "<group>";
+		};
+		3AC85E0C225BCB0F006E9561 /* SplitRow */ = {
+			isa = PBXGroup;
+			children = (
+				3AC85E0D225BCB2E006E9561 /* SplitRowCell.swift */,
+				3AC85E0F225BCB62006E9561 /* SplitRowCellTableView.swift */,
+				3AC85E11225BCB7E006E9561 /* SplitRowValue.swift */,
+				3AC85E13225BCB92006E9561 /* SplitRow.swift */,
+			);
+			name = SplitRow;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -362,13 +382,17 @@
 				3A97E7102258B5A200EDAD6F /* InputsViewModel.swift in Sources */,
 				3A97E71A2258C6EC00EDAD6F /* AnyObservable.swift in Sources */,
 				3A97E729225B528500EDAD6F /* Bindable.swift in Sources */,
+				3AC85E14225BCB92006E9561 /* SplitRow.swift in Sources */,
 				3A97E722225B49C400EDAD6F /* OutputsViewController.swift in Sources */,
 				3A97E724225B4A6700EDAD6F /* OutputsViewModel.swift in Sources */,
+				3AC85E12225BCB7E006E9561 /* SplitRowValue.swift in Sources */,
 				3A97E726225B4CD000EDAD6F /* Navigator.swift in Sources */,
 				3A97E7092258B51300EDAD6F /* Eureka+Rx.swift in Sources */,
 				3A97E6CF225804C800EDAD6F /* AppDelegate.swift in Sources */,
+				3AC85E0E225BCB2E006E9561 /* SplitRowCell.swift in Sources */,
 				3A97E71C2258C75600EDAD6F /* RxChannelTerminal.swift in Sources */,
 				3A97E7152258BE5E00EDAD6F /* AnyTarget.swift in Sources */,
+				3AC85E10225BCB62006E9561 /* SplitRowCellTableView.swift in Sources */,
 				3A97E70322588CD400EDAD6F /* InputsViewController.swift in Sources */,
 				3A97E71E2258C76D00EDAD6F /* RxChannel.swift in Sources */,
 			);
