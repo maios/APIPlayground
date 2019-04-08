@@ -12,6 +12,7 @@ By SSH: `git@github.com:maios/APIPlayground.git`\
 By HTTPS: `https://github.com/maios/APIPlayground.git`
 
 In `Terminal`, navigate to the project directory and run: `./bootstrap.sh`
+
 This step will setup all the necessary dependencies of the project i.e install/update [Homebrew](https://brew.sh) and install/upgrade [Carthage](https://github.com/Carthage/Carthage)
 
 Open the project in XCode and you should be able to build the application in both simulator and devices.
@@ -30,3 +31,7 @@ This project is following MVVM architecture
 
   This project is using the basic `Navigator` pattern to handle the navigation of the application.
   Source: [Navigation in Swift - Swift by Sundell](https://www.swiftbysundell.com/posts/navigation-in-swift)
+
+### Limitations
+
+Currently this project supports only primitive types for parameters. Support for `Dictionary`, `Array` will be added soon.
