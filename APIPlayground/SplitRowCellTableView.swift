@@ -30,13 +30,12 @@ class SplitRowCellTableView<T: TypedRowType>: UITableView, UITableViewDelegate, 
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func setup(){
-        guard let row = self.row else{ return }
-        row.baseCell.setup()
+    func setup(){
+        guard let row = self.row else { return }
         row.baseCell.selectionStyle = .none
     }
 
-    open func update(){
+    func update(){
         guard let row = self.row else{ return }
         row.updateCell()
         row.baseCell.selectionStyle = .none
@@ -45,7 +44,7 @@ class SplitRowCellTableView<T: TypedRowType>: UITableView, UITableViewDelegate, 
 
     // MARK: UITableViewDelegate
 
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let row = self.row else{ return }
 
         // row.baseCell.cellBecomeFirstResponder() may be cause InlineRow collapsed then section count will be changed. Use orignal indexPath will out of  section's bounds.
@@ -55,32 +54,32 @@ class SplitRowCellTableView<T: TypedRowType>: UITableView, UITableViewDelegate, 
         row.didSelect()
     }
 
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let row = self.row else{ return tableView.rowHeight }
         return row.baseCell.height?() ?? tableView.rowHeight
     }
 
-    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let row = self.row else{ return tableView.rowHeight }
         return row.baseCell.height?() ?? tableView.estimatedRowHeight
     }
 
-    open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
 
 
     // MARK: UITableViewDataSource
 
-    open func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return self.row == nil ? 0 : 1
     }
 
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.row == nil ? 0 : 1
     }
 
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let row = self.row else{ fatalError() }
 
         if let cell = row.baseCell, leftSeparatorStyle == .singleLine, false == cell.subviews.contains(where: { $0.backgroundColor == .groupTableViewBackground }){

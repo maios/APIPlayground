@@ -30,8 +30,8 @@ class InputsViewController: FormViewController, Bindable {
     override func loadView() {
         super.loadView()
 
-        baseURLRow = URLRow()
-        pathRow = TextRow()
+        baseURLRow = makeFieldRow()
+        pathRow = makeFieldRow()
         httpMethodPickerRow = PickerInlineRow<HTTPMethod>() { pickerRow in
             pickerRow.title = "HTTP Method"
             pickerRow.options = HTTPMethod.allCases
@@ -46,8 +46,8 @@ class InputsViewController: FormViewController, Bindable {
                 section.multivaluedRowToInsertAt = { _ in
                     return SplitRow<TextRow, TextRow>() {
                         $0.rowLeftPercentage = 0.3
-                        $0.rowLeft = TextRow() { $0.placeholder = "key" }
-                        $0.rowRight = TextRow() { $0.placeholder = "value" }
+                        $0.rowLeft = self.makeFieldRow(placeholder: "key")
+                        $0.rowRight = self.makeFieldRow(placeholder: "value")
                     }
                 }
             }
@@ -78,8 +78,8 @@ class InputsViewController: FormViewController, Bindable {
         let toSplitRows: ([String: Any]) -> [SplitRow<TextRow, TextRow>] = {
             return $0.reduce(into: []) { (result, item) in
                 let row = SplitRow<TextRow, TextRow>() {
-                    $0.rowLeft = TextRow() { $0.value = item.key }
-                    $0.rowRight = TextRow() { $0.value = "\(item.value)" }
+                    $0.rowLeft = self.makeFieldRow(value: item.key)
+                    $0.rowRight = self.makeFieldRow(value: "\(item.value)")
                 }
                 result.append(row)
             }
@@ -110,5 +110,16 @@ class InputsViewController: FormViewController, Bindable {
 
             self.viewModel.tryOutTrigger.onNext(())
         }
+    }
+
+    // MARK: Helper
+
+    private func makeFieldRow<Cell, Row>(placeholder: String? = nil,
+                                         value: Cell.Value? = nil) -> Row where Cell: BaseCell & TextFieldCell, Row: FieldRow<Cell> {
+            let row = Row(tag: nil)
+            row.placeholder = placeholder
+            row.value = value
+            row.cell.textField.autocapitalizationType = .none
+            return row
     }
 }
